@@ -44,6 +44,18 @@ class _ChooseLocationState extends State<ChooseLocation> {
   @override
   Widget build(BuildContext context) {
 
+    void updateTime(index) async{
+      WorldTime instance=locations[index];
+      await instance.getTime();
+//      navigate to the home screen
+    Navigator.pop(context,{
+      'location':instance.location,
+      'time':instance.time,
+      'flag':instance.flag,
+      'dayTime':instance.daytime
+    });
+    }
+
     print("build function is run");
     return Scaffold(
       backgroundColor: Colors.grey[200],
@@ -60,6 +72,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
               child: ListTile(
                 onTap: (){
                   print(locations[index].location);
+                  updateTime(index);
                 },
                 title: Text(locations[index].location),
                 leading: CircleAvatar(

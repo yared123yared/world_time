@@ -10,28 +10,37 @@ class _homeState extends State<home> {
   Map data = {};
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context).settings.arguments;
+    data =data.isNotEmpty? data:ModalRoute.of(context).settings.arguments;
     print('this is the data $data');
-    String bgImage = data['dayTime'] ? 'day.png' : 'night.png';
+    String bgImage = data['dayTime'] ? 'day2.jpg' : 'night2.jpg';
     Color bgColor = data['dayTime'] ? Colors.blue : Colors.indigo[700];
     return Scaffold(
         backgroundColor: bgColor,
         body: SafeArea(
             child: Container(
 
-//              decoration: BoxDecoration(
-//                image: DecorationImage(
-//                  image: AssetImage("assets/day.png"),
-//                  fit: BoxFit.cover,
-//                ),
-//              ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/$bgImage"),
+                  fit: BoxFit.cover,
+                ),
+              ),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 120, 0, 0),
             child: Column(children: <Widget>[
               SizedBox(height: 20.0),
               FlatButton.icon(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/location');
+                  onPressed: () async {
+                    dynamic result=await Navigator.of(context).pushNamed('/location');
+                    setState(() {
+
+                      data={
+                      'location':result['location'],
+                      'time':result['time'],
+                      'flag':result['flag'],
+                      'dayTime':result['dayTime']
+                      };
+                    });
                   },
                   icon: Icon(
                     Icons.edit_location,

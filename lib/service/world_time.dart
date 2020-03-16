@@ -30,6 +30,8 @@ class WorldTime {
       now = now.add(Duration(hours: int.parse(offset)));
 //      time=now.toString();
       daytime=now.hour>6 && now.hour <20? true:false;
+      daytime=true;
+      print('this is the date time $daytime');
       time = DateFormat.jm().format(now);
     } catch (e) {
       print("cought Exception $e");
